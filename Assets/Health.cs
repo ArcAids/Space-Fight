@@ -8,19 +8,35 @@ public class Health : MonoBehaviour, ITakeDamage
     float maxHealth;
 
     float currentHealth;
+    bool isAlive;
 
-    private void Awake()
+    public delegate void OnHealthLost(float lives);
+    event OnHealthLost healthLost;
+    public void RegisterHealthLostListner(OnHealthLost lost)
     {
+        healthLost += lost;
+    }
+    public void DeRegisterHealthLostListner(OnHealthLost lost)
+    {
+        healthLost -= lost;
+    }
+    
+    private void OnEnable()
+    {
+        isAlive = true;
         currentHealth = maxHealth;
     }
 
     public void TakeDamage(float damage)
     {
+        if (!isAlive)
+            return;
         currentHealth -= damage;
+        healthLost?.Invoke(currentHealth);
         if(currentHealth<=0)
         {
-            Destroy(gameObject);
             gameObject.SetActive(false);
+            isAlive = false;
         }
     }
 }

@@ -12,13 +12,18 @@ public class DestroyCounter : MonoBehaviour
 
     private void OnEnable()
     {
-        if (deactivateInstead)
-            Invoke("Deactivate",timer);
-        else
-            Destroy(gameObject, timer);
+        StartCoroutine(DeactivateAfterTime(timer));
     }
 
-    [PunRPC]
+    IEnumerator DeactivateAfterTime(float timer)
+    {
+        yield return new WaitForSeconds(timer);
+        if (deactivateInstead)
+            Deactivate();
+        else
+            Destroy(gameObject);
+    }
+
     private void Deactivate()
     {
         gameObject.SetActive(false);
