@@ -21,13 +21,14 @@ public class Barrier : MonoBehaviour
     }
     private void OnDisable()
     {
+        onDestroyed(id);
         GetComponent<Health>().DeRegisterHealthLostListner(OnHealthUpdated);
     }
     void OnHealthUpdated(float health)
     {
         if(health<=0)
         {
-            onDestroyed(id);
+            gameObject.SetActive(false);
         }
     }
 
