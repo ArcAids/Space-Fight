@@ -6224,7 +6224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minDelay: 1
-  maxDelay: 4
+  maxDelay: 2
 --- !u!114 &1585136243
 MonoBehaviour:
   m_ObjectHideFlags: 0

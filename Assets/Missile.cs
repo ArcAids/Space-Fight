@@ -23,7 +23,7 @@ public class Missile : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.position = new Vector2(xPosition, rigidbody.position.y);
         rigidbody.velocity = transform.up * speed;
-        rigidbody.position += rigidbody.velocity * lag;
+        rigidbody.velocity += rigidbody.velocity * lag;
         this.isMine = isMine;
     }
 

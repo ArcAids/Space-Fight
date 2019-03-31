@@ -43,7 +43,7 @@ public class BarrierManager : MonoBehaviour
             spawnDelay = Random.Range(minDelay, maxDelay);
             yield return new WaitForSeconds(spawnDelay);
 
-            if (DeactivedBarriers.Count - 1 <= 0)
+            if (DeactivedBarriers.Count <= 0)
                 continue;
 
             int randomId=DeactivedBarriers[Random.Range(0,DeactivedBarriers.Count)].id;

@@ -37,6 +37,8 @@ public class ShipThrusters : MonoBehaviour, IPunObservable
         input = new PlayerInput();
         rigid = GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
+        PhotonNetwork.SendRate = 30;
+        PhotonNetwork.SerializationRate = 30;
         if (!PhotonNetwork.InRoom)
         {
             view = null;
@@ -100,10 +102,11 @@ public class ShipThrusters : MonoBehaviour, IPunObservable
         }
         else
         {
+            float lag= (float)(PhotonNetwork.Time - info.SentServerTime);
             targetVelocity = (float)stream.ReceiveNext();
             //currentVelocity = (float)stream.ReceiveNext();
-            Vector2 newPos = new Vector2((float)stream.ReceiveNext() + (rigid.velocity.x * (float)(PhotonNetwork.Time - info.SentServerTime)), rigid.position.y);
-            rigid.position = Vector2.Lerp(rigid.position,newPos,Time.deltaTime * 2);
+            Vector2 newPos = new Vector2((float)stream.ReceiveNext() + (rigid.velocity.x * lag), rigid.position.y);
+            rigid.position = Vector2.Lerp(rigid.position,newPos,(Time.deltaTime+lag) * 2);
         }
     }
 }
